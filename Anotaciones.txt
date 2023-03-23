@@ -1,0 +1,20 @@
+Conexion 
+Abrir dos terminales como administrador, poner mongod en una y mongo en la otra.
+En Back/src -> npm start
+En Front/src -> npm start
+
+Templates -> https://github.com/mui/material-ui/tree/v5.11.13/docs/data/material/getting-started/templates
+
+Typography, si no pongo component ni variant se hace un <p></p> tag.
+Si component es "h1" -> se forma <h1></h1> tag (aunque no se vea grande como un h1).
+
+El variant es el que incrementa el tamaño:
+Por ejemplo : 
+<Typography component="h1" variant="h6">
+</Typography>
+
+Es decir se pone con "h1"(en el navegador) pero si es variant="h6" se ve chico como un h6 tag.
+
+Debe usarse el variant para poner grande o chico los textos.
+
+El id es el que hace la asociacion entre los TextField del form (seria el formControlName de Angular)

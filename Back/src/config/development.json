@@ -1,0 +1,10 @@
+{
+    "nombre": "API Rest Express - Recordatorios",
+    "configDB": {
+        "HOST": "mongodb://localhost:27017/recordatorios"
+    },
+    "configToken": {
+        "SEED": "secret",
+        "expiration": "24h"
+    }
+}
