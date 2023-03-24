@@ -12,7 +12,6 @@ export const useForm = (initialForm = {}, formValidations = {}, formInputsFocus 
 
   const onInputChange = ({ target }) => {
     const { name, value } = target;
-    console.log(value)
     setFormState({
       ...formState,
       [name]: value,
@@ -44,7 +43,6 @@ export const useForm = (initialForm = {}, formValidations = {}, formInputsFocus 
     for (const formField of Object.keys(formValidations)) {
       const [fn, errorMessage] = formValidations[formField]; //obtengo el primer y segundo elemento del array de la property del objeto
       formCheckValues[`${formField}Valid`] = fn(formState[formField]) ? null : errorMessage;
-      console.log(formCheckValues)
       setformValidation(formCheckValues);
     }
   }

@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import { axiosClient } from "../api/api.ts";
 
 const formValidations = {
-  message: [(value) => value.length >= 1, "El recordatorio es obligatorio"],
+  title: [(value) => value.length >= 1, "El titulo es obligatorio"],
 };
 
 const styleModal = {
@@ -21,31 +21,32 @@ const styleModal = {
   p: 4,
 };
 
-export const ReminderModal = ({ selectedDate, showModal, onClose, resetCalendar }) => {
-  const [open, setOpen] = useState(showModal);
+export const WeekModal = ({ selectedDate, showWeekModal, onClose, resetCalendar }) => {
+  const [open, setOpen] = useState(showWeekModal);
 
   const {
     handleTouch,
     touched,
     onInputChange,
     isFormValid,
-    messageValid,
+    titleValid,
     formState,
   } = useForm(
     {
-      message: "",
+      title: "",
     },
     formValidations,
     {
-      message: false,
+      title: false,
     }
   );
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = {
-      title: formState.message,
-      date: selectedDate,
+      title: formState.title,
+      start: selectedDate.start,
+      end: selectedDate.end,
     };
     axiosClient.post("reminders", body).then(() => {
       resetCalendar();
@@ -54,9 +55,12 @@ export const ReminderModal = ({ selectedDate, showModal, onClose, resetCalendar 
     });
   };
 
-  const convertFormatDate = (selectedDate) => {
-    const dateAsArray = selectedDate.split("-");
-    return `${dateAsArray[2]}/${dateAsArray[1]}/${dateAsArray[0]}`;
+  const rangeWeek = (selectedDate) => {
+    const start = selectedDate.start.split("-");
+    const startFormatDate = `${start[2]}/${start[1]}/${start[0]}`;
+    const end = selectedDate.end.split("-");
+    const endFormatDate = `${end[2]}/${end[1]}/${end[0]}`;
+    return `${startFormatDate} - ${endFormatDate}`;
   };
 
   return (
@@ -69,21 +73,20 @@ export const ReminderModal = ({ selectedDate, showModal, onClose, resetCalendar 
       >
         <Box sx={styleModal}>
           <Typography variant="h5">
-            Agregar recordatorio en fecha:{" "}
-            <b>"{convertFormatDate(selectedDate)}"</b>
+            Ingrese titulo de la semana: <b>"{rangeWeek(selectedDate)}"</b>
           </Typography>
           <Box component="form" onSubmit={handleSubmit}>
             <TextField
-              label="Recordatorio"
-              id="message"
-              name="message"
+              label="Titulo"
+              id="title"
+              name="title"
               multiline
               rows={5}
               sx={{ mt: 2, width: "100%" }}
-              onBlur={() => handleTouch("message")}
+              onBlur={() => handleTouch("title")}
               onChange={onInputChange}
-              error={touched["message"] && !!messageValid}
-              helperText={touched["message"] && messageValid}
+              error={touched["title"] && !!titleValid}
+              helperText={touched["title"] && titleValid}
             />
             <Box
               sx={{

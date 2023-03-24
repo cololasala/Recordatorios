@@ -7,8 +7,16 @@ const recordatorioSchema = new mongoose.Schema({
   },
   date: {
     type: String,
-    required: true,
+    required: false,
   },
+  start: {
+    type: String,
+    required: false,
+  },
+  end: {
+    type: String,
+    required: false,
+  }
 });
 
 module.exports = mongoose.model("Recordatorio", recordatorioSchema);

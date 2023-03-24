@@ -31,13 +31,22 @@ router.post("/", (req, res) => {
 });
 
 const getReminders = async () => {
-  return await Recordatorio.find().select({ title: 1, date: 1, _id: 0 });
+  return await Recordatorio.find().select({
+    title: 1,
+    date: 1,
+    start: 1,
+    end: 1,
+    _id: 0,
+  });
 };
 
 const createReminder = (body) => {
+  console.log(body);
   const newReminder = new Recordatorio({
     title: body.title,
     date: body.date,
+    start: body.start,
+    end: body.end,
   });
 
   return newReminder.save();

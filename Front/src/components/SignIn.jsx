@@ -183,11 +183,6 @@ export const SignIn = ({ user }) => {
                 Iniciar sesión
               </Button>
               <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    ¿Olvidaste la contraseña?
-                  </Link>
-                </Grid>
                 <Grid item>
                   <Link href="/sign-up" variant="body2">
                     ¿No tiene cuenta? Registrate aquí
