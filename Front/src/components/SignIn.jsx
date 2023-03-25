@@ -14,7 +14,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm } from "../hooks/useForm";
 import { useState, useEffect } from "react";
 import { axiosClient } from "../api/api.ts";
-import { SnackBar } from "./SnackBar";
+import { CustomSnackBar } from "./CustomSnackBar";
 import { useNavigate } from "react-router-dom";
 
 const formValidations = {
@@ -110,7 +110,7 @@ export const SignIn = ({ user }) => {
 
   return (
     <>
-      <SnackBar
+      <CustomSnackBar
         showSnackBar={showSnackBar}
         message={"Usuario o contraseña incorrectos"}
         severity={"error"}

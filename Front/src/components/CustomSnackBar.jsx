@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { Alert, Snackbar } from "@mui/material";
 
-export const SnackBar = ({ showSnackBar, message, severity, onClosed }) => {
+export const CustomSnackBar = ({ showSnackBar, message, severity, onClosed }) => {
   const [open, setOpen] = useState(showSnackBar);
 
   useEffect(() => {

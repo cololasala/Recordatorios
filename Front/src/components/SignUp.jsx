@@ -11,7 +11,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useForm } from "../hooks/useForm";
 import { axiosClient } from "../api/api.ts";
-import { SnackBar } from "./SnackBar";
+import { CustomSnackBar } from "./CustomSnackBar";
 import { useState, useEffect } from "react";
 
 const formValidations = {
@@ -88,7 +88,7 @@ export const SignUp = () => {
 
   return (
     <>
-      <SnackBar showSnackBar={showSnackBar} message={'El usuario fue creado exitosamente'} severity={"success"}/>
+      <CustomSnackBar showSnackBar={showSnackBar} message={'El usuario fue creado exitosamente'} severity={"success"}/>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />

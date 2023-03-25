@@ -6,9 +6,11 @@ import { ReminderModal } from "./ReminderModal";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { WeekModal } from "./WeekModal";
 import { axiosClient } from "../api/api.ts";
+import { CustomSnackBar } from "./CustomSnackBar";
+import { DropReminderModal } from "./DropReminderModal";
 
 const buttonText = {
-  today: "Hoy",
+  today: "Ir a hoy",
   month: "Mes",
   week: "Semana",
   day: "Dia",
@@ -21,15 +23,27 @@ const headerToolbar = {
   right: "prev,next,dayGridMonth,timeGridWeek",
 };
 
+const buttonHints = {
+  next: "$0 siguiente",
+  prev: "$0 anterior",
+  month: "Mes",
+  week: "Semana",
+  today: "Ir a hoy",
+};
+
 export const Calendar = () => {
   const [eventsCalendar, setEventsCalendar] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [showWeekModal, setShowWeekModal] = useState(null);
-  
+  const [showWeekModal, setShowWeekModal] = useState(false);
+  const [showDropModal, setShowDropModal] = useState(false);
+  const [showSnackBar, setShowSnackBar] = useState(false);
+  const [selectedReminder, setSelectedReminder] = useState(null);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
+
   useEffect(() => {
     getEventsCalendar();
-  }, [])
+  }, []);
 
   const selectDay = (e) => {
     if (e.allDay) {
@@ -40,7 +54,8 @@ export const Calendar = () => {
   };
 
   const selectWeek = (e) => {
-    if (!e.allDay) {         // es seleccion por semana
+    if (!e.allDay) {
+      // es seleccion por semana
       const startDate = e.startStr.split("T")[0];
       const endDate = e.endStr.split("T")[0];
       if (startDate !== endDate) {
@@ -50,19 +65,44 @@ export const Calendar = () => {
     }
   };
 
-  const getEventsCalendar = () => {
-    axiosClient.get("reminders").then(({data}) => {
-      setEventsCalendar(data);
-      console.log(data)
-      setShowModal(false);
-      setShowWeekModal(false);
-    }).catch((err) => {
-      console.log(err);
-    })
+  const getEventsCalendar = (firstLoad = true, snackBarMessage = "") => {
+    axiosClient
+      .get("reminders")
+      .then(({ data }) => {
+        setEventsCalendar(data);
+        if (!firstLoad) {
+          closeModals();
+          setSnackBarMessage(snackBarMessage);
+          setShowSnackBar(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-  
+
+  const closeModals = () => {
+    setShowModal(false);
+    setShowWeekModal(false);
+    setShowDropModal(false);
+  };
+
+  const removeEvent = (e) => {
+    const reminderId = e.event._def.extendedProps._id;
+    const title = e.event._def.title;
+    const eventReminder = {id: reminderId, title: title}
+    setSelectedReminder(eventReminder);
+    setShowDropModal(true);
+  };
+
   return (
     <>
+      <CustomSnackBar
+        showSnackBar={showSnackBar}
+        message={snackBarMessage}
+        severity={"success"}
+        onClosed={() => setShowSnackBar(false)}
+      />
       <FullCalendar
         locale="es"
         buttonText={buttonText}
@@ -73,13 +113,17 @@ export const Calendar = () => {
         dateClick={selectDay}
         selectable={true}
         select={selectWeek}
+        eventClick={removeEvent}
+        buttonHints={buttonHints}
       />
       {showModal && (
         <ReminderModal
           selectedDate={selectedDate}
           showModal={showModal}
           onClose={() => setShowModal(false)}
-          resetCalendar={() => getEventsCalendar()}
+          onSuccess={() =>
+            getEventsCalendar(false, "Recordatorio creado exitosamente")
+          }
         />
       )}
 
@@ -88,7 +132,20 @@ export const Calendar = () => {
           selectedDate={selectedDate}
           showWeekModal={showWeekModal}
           onClose={() => setShowWeekModal(false)}
-          resetCalendar={() => getEventsCalendar()}
+          onSuccess={() =>
+            getEventsCalendar(false, "Semana creada exitosamente")
+          }
+        />
+      )}
+
+      {showDropModal && (
+        <DropReminderModal
+          showDropModal={showDropModal}
+          selectedReminder={selectedReminder}
+          onClose={() => setShowDropModal(false)}
+          onSuccess={() =>
+            getEventsCalendar(false, "Evento eliminado exitosamente")
+          }
         />
       )}
     </>

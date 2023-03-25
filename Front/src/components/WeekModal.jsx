@@ -21,7 +21,7 @@ const styleModal = {
   p: 4,
 };
 
-export const WeekModal = ({ selectedDate, showWeekModal, onClose, resetCalendar }) => {
+export const WeekModal = ({ selectedDate, showWeekModal, onClose, onSuccess }) => {
   const [open, setOpen] = useState(showWeekModal);
 
   const {
@@ -47,9 +47,10 @@ export const WeekModal = ({ selectedDate, showWeekModal, onClose, resetCalendar 
       title: formState.title,
       start: selectedDate.start,
       end: selectedDate.end,
+      color: '#378006'
     };
     axiosClient.post("reminders", body).then(() => {
-      resetCalendar();
+      onSuccess();
     }).catch((err) => {
       console.log(err);
     });

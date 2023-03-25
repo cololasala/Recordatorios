@@ -21,7 +21,7 @@ const styleModal = {
   p: 4,
 };
 
-export const ReminderModal = ({ selectedDate, showModal, onClose, resetCalendar }) => {
+export const ReminderModal = ({ selectedDate, showModal, onClose, onSuccess }) => {
   const [open, setOpen] = useState(showModal);
 
   const {
@@ -48,7 +48,7 @@ export const ReminderModal = ({ selectedDate, showModal, onClose, resetCalendar 
       date: selectedDate,
     };
     axiosClient.post("reminders", body).then(() => {
-      resetCalendar();
+      onSuccess();
     }).catch((err) => {
       console.log(err);
     });

@@ -16,6 +16,10 @@ const recordatorioSchema = new mongoose.Schema({
   end: {
     type: String,
     required: false,
+  },
+  color: {
+    type: String,
+    required: false
   }
 });
 
