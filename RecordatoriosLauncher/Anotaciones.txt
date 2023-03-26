@@ -1,0 +1,3 @@
+Los archivos .bat o .cmd permiten la ejecucion de npm.
+Lo que se hace es con el archivo por fuera de la carpeta llamado IniciarApp al ejecutarlo llama a cada
+uno de los archivos de esta carpeta y los ejecuta en orden.
