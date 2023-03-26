@@ -3,6 +3,8 @@ export * from './CustomSnackBar';
 export * from './DashBoardList';
 export * from './Dashboard';
 export * from './DropReminderModal';
+export * from './LogoutModal';
+export * from './NotificationModal';
 export * from './Organizer';
 export * from './ReminderModal';
 export * from './SignIn';

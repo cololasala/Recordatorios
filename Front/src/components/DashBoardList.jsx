@@ -4,10 +4,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import TodayIcon from "@mui/icons-material/Today";
-import { useNavigate } from "react-router-dom";
 
 export const DashBoardList = ({ listOption }) => {
-  const navigate = useNavigate();
 
   const setOption = (option) => {
     listOption(option);

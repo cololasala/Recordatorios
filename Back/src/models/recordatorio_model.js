@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const recordatorioSchema = new mongoose.Schema({
+  user: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -19,6 +23,10 @@ const recordatorioSchema = new mongoose.Schema({
   },
   color: {
     type: String,
+    required: false
+  },
+  active: {
+    type: Boolean,
     required: false
   }
 });

@@ -44,8 +44,10 @@ export const ReminderModal = ({ selectedDate, showModal, onClose, onSuccess }) =
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = {
+      user: JSON.parse(sessionStorage.getItem('user')).email,
       title: formState.message,
       date: selectedDate,
+      active: true,
     };
     axiosClient.post("reminders", body).then(() => {
       onSuccess();

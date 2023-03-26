@@ -44,6 +44,7 @@ export const WeekModal = ({ selectedDate, showWeekModal, onClose, onSuccess }) =
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = {
+      user: JSON.parse(sessionStorage.getItem('user')).email,
       title: formState.title,
       start: selectedDate.start,
       end: selectedDate.end,

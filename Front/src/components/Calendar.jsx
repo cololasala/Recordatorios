@@ -31,7 +31,7 @@ const buttonHints = {
   today: "Ir a hoy",
 };
 
-export const Calendar = () => {
+export const Calendar = ({sendNotifications}) => {
   const [eventsCalendar, setEventsCalendar] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -40,6 +40,7 @@ export const Calendar = () => {
   const [showSnackBar, setShowSnackBar] = useState(false);
   const [selectedReminder, setSelectedReminder] = useState(null);
   const [snackBarMessage, setSnackBarMessage] = useState("");
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     getEventsCalendar();
@@ -74,12 +75,25 @@ export const Calendar = () => {
           closeModals();
           setSnackBarMessage(snackBarMessage);
           setShowSnackBar(true);
+          prepareNotifications(data);
+        } else {
+          prepareNotifications(data);
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const prepareNotifications = (data) => {
+    const today = new Date();
+    const todayPlusFive = new Date();
+    todayPlusFive.setDate(today.getDate() + 5);
+    const formatIso = todayPlusFive.toISOString().split('T')[0];
+    const notifications = data.filter((d) => d.active && d.date === formatIso);
+    setNotifications(notifications);
+    sendNotifications(notifications);
+  }
 
   const closeModals = () => {
     setShowModal(false);

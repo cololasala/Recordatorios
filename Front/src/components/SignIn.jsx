@@ -182,7 +182,7 @@ export const SignIn = ({ user }) => {
               >
                 Iniciar sesión
               </Button>
-              <Grid container>
+              <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link href="/sign-up" variant="body2">
                     ¿No tiene cuenta? Registrate aquí
