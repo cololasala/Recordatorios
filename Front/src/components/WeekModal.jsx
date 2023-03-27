@@ -21,8 +21,12 @@ const styleModal = {
   p: 4,
 };
 
-export const WeekModal = ({ selectedDate, showWeekModal, onClose, onSuccess }) => {
-
+export const WeekModal = ({
+  selectedDate,
+  showWeekModal,
+  onClose,
+  onSuccess,
+}) => {
   const {
     handleTouch,
     touched,
@@ -43,17 +47,20 @@ export const WeekModal = ({ selectedDate, showWeekModal, onClose, onSuccess }) =
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = {
-      user: JSON.parse(sessionStorage.getItem('user')).email,
+      user: JSON.parse(sessionStorage.getItem("user")).email,
       title: formState.title,
       start: selectedDate.start,
       end: selectedDate.end,
-      color: '#378006'
+      color: "#378006",
     };
-    axiosClient.post("reminders", body).then(() => {
-      onSuccess();
-    }).catch((err) => {
-      console.log(err);
-    });
+    axiosClient
+      .post("reminders", body)
+      .then(() => {
+        onSuccess();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const rangeWeek = (selectedDate) => {
@@ -61,7 +68,11 @@ export const WeekModal = ({ selectedDate, showWeekModal, onClose, onSuccess }) =
     const startFormatDate = `${start[2]}/${start[1]}/${start[0]}`;
     const end = selectedDate.end.split("-");
     const endFormatDate = `${end[2]}/${end[1]}/${end[0]}`;
-    return `${startFormatDate} - ${endFormatDate}`;
+    const startEndFormat = {
+      startFormatDate: startFormatDate,
+      endFormatDate: endFormatDate,
+    };
+    return startEndFormat;
   };
 
   return (
@@ -73,9 +84,14 @@ export const WeekModal = ({ selectedDate, showWeekModal, onClose, onSuccess }) =
         aria-describedby="modal-modal-description"
       >
         <Box sx={styleModal}>
-          <Typography variant="h5">
-            Ingrese titulo de la semana: <b>"{rangeWeek(selectedDate)}"</b>
+          <Typography variant="h5" sx={{mb: 1}}>Ingrese titulo de la semana:</Typography>
+          <Typography>
+            Desde: {rangeWeek(selectedDate).startFormatDate}
           </Typography>
+          <Typography>
+            Hasta: {rangeWeek(selectedDate).endFormatDate} <span style={{color: "gray"}}>(no inclusive)</span>
+          </Typography>
+
           <Box component="form" onSubmit={handleSubmit}>
             <TextField
               label="Titulo"
