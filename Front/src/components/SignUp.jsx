@@ -88,7 +88,7 @@ export const SignUp = () => {
 
   return (
     <>
-      <CustomSnackBar showSnackBar={showSnackBar} message={'El usuario fue creado exitosamente'} severity={"success"}/>
+      <CustomSnackBar showSnackBar={showSnackBar} message={'El usuario fue creado exitosamente'} severity={"success"} onClosed={() => setShowSnackBar(false)}/>
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />

@@ -22,7 +22,6 @@ const styleModal = {
 };
 
 export const WeekModal = ({ selectedDate, showWeekModal, onClose, onSuccess }) => {
-  const [open, setOpen] = useState(showWeekModal);
 
   const {
     handleTouch,
@@ -68,7 +67,7 @@ export const WeekModal = ({ selectedDate, showWeekModal, onClose, onSuccess }) =
   return (
     <>
       <Modal
-        open={open}
+        open={showWeekModal}
         onClose={onClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"

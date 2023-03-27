@@ -21,8 +21,7 @@ const styleModal = {
   p: 4,
 };
 
-export const ReminderModal = ({ selectedDate, showModal, onClose, onSuccess }) => {
-  const [open, setOpen] = useState(showModal);
+export const ReminderModal = ({ showModal, selectedDate, onClose, onSuccess }) => {
 
   const {
     handleTouch,
@@ -64,7 +63,7 @@ export const ReminderModal = ({ selectedDate, showModal, onClose, onSuccess }) =
   return (
     <>
       <Modal
-        open={open}
+        open={showModal}
         onClose={onClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"

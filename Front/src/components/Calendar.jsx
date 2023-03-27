@@ -31,7 +31,7 @@ const buttonHints = {
   today: "Ir a hoy",
 };
 
-export const Calendar = ({sendNotifications}) => {
+export const Calendar = ({ sendNotifications }) => {
   const [eventsCalendar, setEventsCalendar] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -89,11 +89,11 @@ export const Calendar = ({sendNotifications}) => {
     const today = new Date();
     const todayPlusFive = new Date();
     todayPlusFive.setDate(today.getDate() + 5);
-    const formatIso = todayPlusFive.toISOString().split('T')[0];
+    const formatIso = todayPlusFive.toISOString().split("T")[0];
     const notifications = data.filter((d) => d.active && d.date === formatIso);
     setNotifications(notifications);
     sendNotifications(notifications);
-  }
+  };
 
   const closeModals = () => {
     setShowModal(false);
@@ -104,7 +104,7 @@ export const Calendar = ({sendNotifications}) => {
   const removeEvent = (e) => {
     const reminderId = e.event._def.extendedProps._id;
     const title = e.event._def.title;
-    const eventReminder = {id: reminderId, title: title}
+    const eventReminder = { id: reminderId, title: title };
     setSelectedReminder(eventReminder);
     setShowDropModal(true);
   };
@@ -130,10 +130,11 @@ export const Calendar = ({sendNotifications}) => {
         eventClick={removeEvent}
         buttonHints={buttonHints}
       />
+
       {showModal && (
         <ReminderModal
-          selectedDate={selectedDate}
           showModal={showModal}
+          selectedDate={selectedDate}
           onClose={() => setShowModal(false)}
           onSuccess={() =>
             getEventsCalendar(false, "Recordatorio creado exitosamente")
@@ -143,8 +144,8 @@ export const Calendar = ({sendNotifications}) => {
 
       {showWeekModal && (
         <WeekModal
-          selectedDate={selectedDate}
           showWeekModal={showWeekModal}
+          selectedDate={selectedDate}
           onClose={() => setShowWeekModal(false)}
           onSuccess={() =>
             getEventsCalendar(false, "Semana creada exitosamente")

@@ -1,6 +1,5 @@
 import { Button, Modal, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
 import { axiosClient } from "../api/api.ts";
 
 const styleModal = {
@@ -20,7 +19,6 @@ export const DropReminderModal = ({
   selectedReminder,
   onSuccess,
 }) => {
-  const [open, setOpen] = useState(showDropModal);
 
   const onAccept = (reminderId) => {
     axiosClient
@@ -33,7 +31,7 @@ export const DropReminderModal = ({
 
   return (
     <Modal
-      open={open}
+      open={showDropModal}
       onClose={onClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
